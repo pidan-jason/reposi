@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bdqn.mapper.TeacherMapper">
+
+	<resultMap type="com.bdqn.model.Teacher" id="fullMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="nation" column="nation"/>
+		<result property="gender" column="gender"/>
+		<result property="birthday" column="birthday"/>
+		<result property="card" column="card"/>
+		<result property="address" column="address"/>
+		<result property="marry" column="marry"/>
+		<result property="study" column="study"/>
+		<result property="school" column="school"/>
+		<result property="major" column="major"/>
+		<result property="phone" column="phone"/>
+		<result property="email" column="email"/>
+		<result property="home" column="home"/>
+		<result property="homephone" column="homephone"/>
+		<result property="hiredate" column="hiredate"/>
+		<result property="officephone" column="officephone"/>
+		<result property="leave" column="leave"/>
+		<result property="leavedate" column="leavedate"/>
+		<association property="dept" javaType="com.bdqn.model.Dept">
+			<id property="id" column="dId"/>
+			<result property="name" column="dName"/>
+		</association>
+		<association property="position" javaType="com.bdqn.model.Position">
+			<id property="id" column="pId"/>
+			<result property="name" column="pName"/>
+		</association>
+	</resultMap>
+	
+	<select id="listAll" resultMap="fullMap">
+		select t1.id,t1.`name`,t1.nation,t1.gender,t1.birthday,t1.card,t1.address,t1.marry,
+		t1.study,t1.school,t1.major,t1.phone,t1.email,t1.home,t1.homephone,
+		t1.hiredate,t1.officephone,t1.`leave`,t1.leavedate,
+		t2.id as dId, 
+		t2.`name` as dName ,
+		t3.id as pId,t3.`name` as pName
+		from teacher t1 left join dept t2 on t1.dept = t2.id
+		left join position t3 on t1.position = t3.id 
+	</select>
+	<select id="selectTive" resultMap="fullMap">
+		select t1.id,t1.`name`,t1.nation,t1.gender,t1.birthday,t1.card,t1.address,t1.marry,
+		t1.study,t1.school,t1.major,t1.phone,t1.email,t1.home,t1.homephone,
+		t1.hiredate,t1.officephone,t1.`leave`,t1.leavedate,
+		t2.id as dId, 
+		t2.`name` as dName ,
+		t3.id as pId,t3.`name` as pName
+		from teacher t1 left join dept t2 on t1.dept = t2.id
+		left join position t3 on t1.position = t3.id
+		<where>
+			<if test="dept.id != null  and dept.id != '' ">
+				and t1.dept = #{dept.id}
+			</if>
+			<if test="position.id != null and position.id != '' ">
+				and t1.position = #{position.id}
+			</if>
+			<if test="name != null and name != ''">
+				and t1.name = #{name}
+			</if>
+			<if test="leave != null and leave != ''">
+				and t1.`leave` = #{leave}
+			</if>
+		</where>
+	</select>
+	<select id="get" resultMap="fullMap">
+		select t1.id,t1.`name`,t1.nation,t1.gender,t1.birthday,t1.card,t1.address,t1.marry,
+		t1.study,t1.school,t1.major,t1.phone,t1.email,t1.home,t1.homephone,
+		t1.hiredate,t1.officephone,t1.`leave`,t1.leavedate,
+		t2.id as dId, 
+		t2.`name` as dName ,
+		t3.id as pId,t3.`name` as pName
+		from teacher t1 left join dept t2 on t1.dept = t2.id
+		left join position t3 on t1.position = t3.id
+		where t1.id = #{id}
+	</select>
+	<update id="update">
+		update teacher
+		<set>
+			<if test="id != null">
+			id = #{id},
+			</if>
+			<if test="name != null">
+			name = #{name},
+			</if>
+			<if test="nation != null">
+			nation = #{nation},
+			</if>
+			<if test="gender != null">
+			gender = #{gender},
+			</if>
+			<if test="birthday != null">
+			birthday = #{birthday},
+			</if>
+			<if test="card != null">
+			card = #{card},
+			</if>
+			<if test="id != null">
+			address = #{address},
+			</if>
+			<if test="marry != null">
+			marry = #{marry},
+			</if>
+			<if test="study != null">
+			study = #{study},
+			</if>
+			<if test="major != null">
+			major = #{major},
+			</if>
+			<if test="phone != null">
+			phone = #{phone},
+			</if>
+			<if test="email != null">
+			email = #{email},
+			</if>
+			<if test="home != null">
+			home = #{home},
+			</if>
+			<if test="homephone != null">
+			homephone = #{homephone},
+			</if>
+			<if test="dept != null">
+			dept = #{dept},
+			</if>
+			<if test="position != null">
+			position = #{position},
+			</if>
+			<if test="hiredate != null">
+			hiredate = #{hiredate},
+			</if>
+			<if test="officephone != null">
+			officephone = #{officephone},
+			</if>
+			<if test="leave != null">
+			`leave` = #{leave},
+			</if>
+			<if test="leave != null">
+			leavedate = #{leavedate},
+			</if>
+		</set>
+		<where>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+		</where>
+	</update>
+	
+	
+	<delete id="delete">
+		delete from teacher where id = #{id}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
